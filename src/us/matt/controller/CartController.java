@@ -18,14 +18,12 @@ import java.util.List;
 @WebServlet(name = "CartServlet")
 public class CartController extends HttpServlet {
     private String RESULT_PAGE = "cart.jsp";
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-    }
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {}
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Cookie cookie = null;
         Cookie[] cookies = null;
-        // Get an array of Cookies associated with the this domain
         cookies = request.getCookies();
         PrintWriter out = response.getWriter();
         List<Item> items = new ArrayList();
@@ -41,8 +39,7 @@ public class CartController extends HttpServlet {
         }
         request.setAttribute("catalog", items);
 
-        RequestDispatcher view =
-            request.getRequestDispatcher(RESULT_PAGE);
+        RequestDispatcher view = request.getRequestDispatcher(RESULT_PAGE);
         view.forward(request, response);
     }
 
@@ -51,7 +48,8 @@ public class CartController extends HttpServlet {
         ItemCatalog cat = new ItemCatalog();
         String[] nums = itemsNumbers.split(",");
         for (int i=0;i<nums.length;i++) {
-            items.add(cat.getSingleItem(Integer.parseInt(nums[i])));
+            if (nums[i].length() > 0)
+                items.add(cat.getSingleItem(Integer.parseInt(nums[i])));
         }
         return items;
     }

@@ -33,8 +33,8 @@
                     double total = 0;
                     while (it.hasNext()) {
                         Item item = (Item) it.next();
-                        out.print("<tr class='purch'><td> " + item.getName() + " </td><td>" +
-                                String.format("$%3.2f",item.getPrice()) + "</td></tr>");
+                        out.print("<tr class='purch'><td> " + item.getName() + " </td>" +
+                                "<td>" + String.format("$%3.2f",item.getPrice()) + "</td></tr>");
                         total+=item.getPrice();
                     }
                     out.print("<tr class='total' ><td>Subtotal:</td><td>" +

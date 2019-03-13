@@ -44,4 +44,12 @@
         <servlet-name>bill</servlet-name>
         <url-pattern>/bill.go</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>delete</servlet-name>
+        <servlet-class>us.matt.controller.DeleteController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>delete</servlet-name>
+        <url-pattern>/delete.go</url-pattern>
+    </servlet-mapping>
 </web-app>

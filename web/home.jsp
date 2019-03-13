@@ -13,7 +13,6 @@
     <meta name="description" content="Milli's Store, Milwaukee's Only Milli-Owned Store.">
 </head>
 <script>
-    var userInput = "test";
     var fullTable = [];
 
     function saveTable() {
@@ -28,28 +27,22 @@
     }
 
     function getSearchTerm() {
-        userInput = $("#userSearch").val();
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("myInput");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("myTable");
+        tr = table.getElementsByTagName("tr");
 
-        var myTableArray = fullTable;
-
-        if (userInput !== "") {
-            for (var i = myTableArray.length - 1; i >= 0; i--) {
-                if (myTableArray[i][1].indexOf(userInput) === -1)
-                    myTableArray.splice(i, 1);
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[0];
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
             }
-        }
-
-        $("#products tr").remove();
-
-        for (var j = 0; j < myTableArray.length; j++) {
-            var v = myTableArray[j];
-            var $line = $("<tr></tr>");
-            var itemNum = v[0];
-            $line.append($("<td></td>").html(v[0]));
-            $line.append($("<td></td>").html(v[1]));
-            $line.append($("<td></td>").html(v[2]));
-            $line.append($("<td></td>").html('Add to Cart<input type="checkbox" name="cartItem" value="' + itemNum + '"/>'));
-            $("#products tbody").append($line);
         }
     }
 </script>
@@ -69,12 +62,17 @@
             <br>
             <h2>Home</h2>
 
-            Search items: <input type="text" id="userSearch">
-            <input type="button" id="search" value="Search" onclick="getSearchTerm()">
-            <input type="button" value="Refresh" onclick="window.location.reload()">
+            <input type="text" id="myInput" onkeyup="getSearchTerm()" placeholder="Search for item">
+            <input class="btn btn-lg" type="button" value="Refresh" id="refresh" onclick="window.location.reload()">
 
             <form action="cartplace.go">
-                <table id="products">
+                <table id="myTable">
+                    <tr>
+                        <th>Name</th>
+                        <th>Item #</th>
+                        <th>Price</th>
+                        <th>Add</th>
+                    </tr>
                     <tbody>
                         <%
                             List recs = (List) request.getAttribute("catalog");
@@ -82,15 +80,17 @@
                             while (it.hasNext()) {
                                 Item item = (Item) it.next();
 
-                                out.print("<tr><td>" + item.getProductNumber() + "</td><td>" +
-                                        item.getName() + "</td><td>$" + item.getPrice() +
-                                        "</td><td>Add to Cart<input type='checkbox' name='cartItem' value=" +
+                                out.print("<tr>" +
+                                        "<td>" + item.getName() + "</td>" +
+                                        "<td>" + item.getProductNumber() + "</td>" +
+                                        "<td>$" + item.getPrice() + "</td>" +
+                                        "<td>Add to Cart<input type='checkbox' name='cartItem' value=" +
                                         item.getProductNumber()+ "></td></tr>");
                             }
                         %>
                     </tbody>
                 </table>
-                <input type="submit" value="Purchase">
+                <button type="submit">Purchase</button>
             </form>
         </main>
     <footer>

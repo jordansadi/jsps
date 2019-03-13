@@ -20,7 +20,6 @@ public class CartPlaceController extends HttpServlet {
             paramName = (String)paramNames.nextElement();
             if(paramName.equals("cartItem")) {
                 String[] paramValues = request.getParameterValues(paramName);
-                // Read single valued data
                 if (paramValues.length == 1) {
                     String paramValue = paramValues[0];
                     if (paramValue.length() == 0)

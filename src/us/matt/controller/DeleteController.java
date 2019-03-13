@@ -1,20 +1,61 @@
 package us.matt.controller;
 
+import us.matt.model.Item;
+
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.List;
 
-@WebServlet(name = "DeleteServlet")
 public class DeleteController extends HttpServlet {
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        Enumeration paramNames = request.getParameterNames();
+        String paramName;
+        String deleteId = "";
+        Cookie[] cookies = null;
+        String ids = "";
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        while (paramNames.hasMoreElements()) {
+            paramName = (String) paramNames.nextElement();
+            if (paramName.equals("deleteItem")) {
+                String[] paramValues = request.getParameterValues(paramName);
+                if (paramValues.length == 1) {
+                    deleteId = paramValues[0];
+                }
+            }
+        }
 
-    }
+        cookies = request.getCookies();
+        for (Cookie cookie : cookies) {
+            if (cookie.getName().equals("cartItem")) {
+                String[] nums = cookie.getValue().split(",");
+                for (int i = 0; i < nums.length; i++) {
+                    if (!deleteId.equals(nums[i])) {
+                        ids += nums[i] + ",";
+                    }
+                }
+            }
+        }
+        for (Cookie cookie : cookies) {
+            if (cookie.getName().equals("cartItem")) {
+                cookie.setMaxAge(0);
+            }
+        }
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        Cookie items = new Cookie("cartItem", ids);
+        items.setMaxAge(60 * 60 * 24);
+        response.addCookie(items);
 
+        String site = "cart.go";
+        response.setStatus(response.SC_MOVED_TEMPORARILY);
+        response.setHeader("Location", site);
     }
 }

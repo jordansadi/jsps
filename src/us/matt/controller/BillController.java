@@ -51,7 +51,8 @@ public class BillController extends HttpServlet {
         ItemCatalog cat = new ItemCatalog();
         String[] nums = itemsNumbers.split(",");
         for (int i=0;i<nums.length;i++) {
-            items.add(cat.getSingleItem(Integer.parseInt(nums[i])));
+            if (nums[i].length() > 0)
+                items.add(cat.getSingleItem(Integer.parseInt(nums[i])));
         }
         return items;
     }
