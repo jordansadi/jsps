@@ -5,7 +5,7 @@
          version="4.0">
     <servlet>
         <servlet-name>home</servlet-name>
-        <servlet-class>us.matt.controller.HomeController</servlet-class>
+        <servlet-class>us.jordan.controller.HomeController</servlet-class>
         <load-on-startup>1</load-on-startup>
     </servlet>
     <servlet-mapping>
@@ -14,7 +14,7 @@
     </servlet-mapping>
     <servlet>
         <servlet-name>cat</servlet-name>
-        <servlet-class>us.matt.controller.CatalogController</servlet-class>
+        <servlet-class>us.jordan.controller.CatalogController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>cat</servlet-name>
@@ -22,7 +22,7 @@
     </servlet-mapping>
     <servlet>
         <servlet-name>cartPlace</servlet-name>
-        <servlet-class>us.matt.controller.CartPlaceController</servlet-class>
+        <servlet-class>us.jordan.controller.CartPlaceController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>cartPlace</servlet-name>
@@ -30,7 +30,7 @@
     </servlet-mapping>
     <servlet>
         <servlet-name>cart</servlet-name>
-        <servlet-class>us.matt.controller.CartController</servlet-class>
+        <servlet-class>us.jordan.controller.CartController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>cart</servlet-name>
@@ -38,7 +38,7 @@
     </servlet-mapping>
     <servlet>
         <servlet-name>bill</servlet-name>
-        <servlet-class>us.matt.controller.BillController</servlet-class>
+        <servlet-class>us.jordan.controller.BillController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>bill</servlet-name>
@@ -46,7 +46,7 @@
     </servlet-mapping>
     <servlet>
         <servlet-name>delete</servlet-name>
-        <servlet-class>us.matt.controller.DeleteController</servlet-class>
+        <servlet-class>us.jordan.controller.DeleteController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>delete</servlet-name>

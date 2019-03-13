@@ -1,4 +1,4 @@
-package us.matt.controller;
+package us.jordan.controller;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;

@@ -1,4 +1,4 @@
-package us.matt.model;
+package us.jordan.model;
 
 public class Item {
     private int productNumber;

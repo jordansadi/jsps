@@ -1,7 +1,7 @@
-package us.matt.controller;
+package us.jordan.controller;
 
-import us.matt.model.Item;
-import us.matt.model.ItemCatalog;
+import us.jordan.model.Item;
+import us.jordan.model.ItemCatalog;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;

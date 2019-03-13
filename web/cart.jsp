@@ -1,6 +1,6 @@
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.Iterator" %>
-<%@ page import="us.matt.model.Item" %>
+<%@ page import="us.jordan.model.Item" %>
 <%@ page import="java.net.URLEncoder" %>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>

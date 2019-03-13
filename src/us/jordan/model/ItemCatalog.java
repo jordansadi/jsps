@@ -1,4 +1,4 @@
-package us.matt.model;
+package us.jordan.model;
 
 import java.util.ArrayList;
 import java.util.List;
