@@ -4,13 +4,11 @@ public class Item {
     private int productNumber;
     private String name;
     private double price;
-    private String description;
 
-    public Item(int productNumber, String name, double price, String description) {
+    public Item(int productNumber, String name, double price) {
         this.productNumber = productNumber;
         this.name = name;
         this.price = price;
-        this.description = description;
     }
 
     public int getProductNumber() {
@@ -25,7 +23,7 @@ public class Item {
         return price;
     }
 
-    public String getDescription() {
-        return description;
-    }
+    public void setProductNumber(int pn) { productNumber = pn; }
+    public void setName(String n) { name = n; }
+    public void setPrice(double p) { price = p; }
 }

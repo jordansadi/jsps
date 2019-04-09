@@ -1,38 +1,81 @@
 package us.jordan.model;
 
+import javax.servlet.http.HttpServlet;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ItemCatalog {
-    private List<Item> itemCatalog = new ArrayList<>();
-    private int nextProductNumber;
+
+public class ItemCatalog extends HttpServlet {
+    private static List<Item> itemList = new ArrayList<>();
 
     public ItemCatalog() {
-        nextProductNumber = 1;
-        itemCatalog.add(new Item(nextProductNumber++, "MilwaukeeHome Shirt", 30.99, "T-shirts and sweatshirts in every color you can think of"));
-        itemCatalog.add(new Item(nextProductNumber++, "Wiskullsin Shirt", 30.99, "Wisconsin pride with a sp00ky vibe"));
-        itemCatalog.add(new Item(nextProductNumber++, "Giltee Shirt", 30.99, "Classy Milwaukee shirts from a local brand"));
-        itemCatalog.add(new Item(nextProductNumber++, "Orchard Street Apparel Shirt", 30.99, "T-shirts and sweatshirts in every color you can think of"));
-        itemCatalog.add(new Item(nextProductNumber++, "Brew City Brand Shirt", 25.99, "Milwaukee pride for the kids"));
-        itemCatalog.add(new Item(nextProductNumber++, "Fern & Nettle Soap", 8.99, "Locally-made soaps with unexpected smells"));
-        itemCatalog.add(new Item(nextProductNumber++, "Tactile Craftworks Wallet", 15.99, "Feel like a fancy person with these leather wallets"));
-        itemCatalog.add(new Item(nextProductNumber++, "Dear Darlington Jewelry", 20.99, "Support local artists while taking your outfits to the next level"));
-        itemCatalog.add(new Item(nextProductNumber++, "Paper Pleasers Mug", 12.99, "Decorated with the Milwaukee skyline"));
-        itemCatalog.add(new Item(nextProductNumber++, "Indulgence Chocolatiers Chocolate", 6.99, "You're going to eat chocolate anyway, so it might as well be locally made"));
+        addItems();
     }
 
-    public List<Item> getItemCatalog() {
-        return itemCatalog;
-    }
+    public static void addItems() {
+        final String DB_URL = "jdbc:derby:ProductsDB";
+        Statement stmt = null;
+        Connection conn = null;
 
-    public Item getSingleItem(int itemNum) {
-        Item item=null;
+        try {
+            conn = DriverManager.getConnection(DB_URL);
+            stmt = conn.createStatement();
 
-        for(Item i: itemCatalog) {
-            if (i.getProductNumber() == itemNum) {
-                return i;
+            String sql;
+            sql = "SELECT ProdNum, Description, Price FROM Products";
+            ResultSet rs = stmt.executeQuery(sql);
+
+            while(rs.next()){
+                Item toAdd = new Item(0, "", 0);
+
+                String pn  = rs.getString("ProdNum");
+                double price = rs.getDouble("Price");
+                String name = rs.getString("Description");
+
+                toAdd.setProductNumber(Integer.parseInt(pn));
+                toAdd.setName(name);
+                toAdd.setPrice(price);
+
+                itemList.add(toAdd);
+             }
+
+            rs.close();
+            stmt.close();
+            conn.close();
+
+        } catch (SQLException se) {
+            se.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (stmt != null) {
+                    stmt.close();
+                }
+            } catch (SQLException se2) {
+
+            }
+            try {
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException se) {
+                se.printStackTrace();
             }
         }
-        return item;
     }
+
+    public static Item getItem(int i) {
+        Item theItem = null;
+
+        for (Item itemName : itemList) {
+            if (itemName.getProductNumber() == i) {
+                theItem = itemName;
+            }
+        }
+        return theItem;
+    }
+
+    public List<Item> getAllItems() { return itemList; }
 }

@@ -29,7 +29,7 @@ public class BillController extends HttpServlet {
         cookies = request.getCookies();
         PrintWriter out = response.getWriter();
         List<Item> items = new ArrayList();
-        items.add(new Item(0," ",0.0," "));
+        items.add(new Item(0," ",0.0));
         if( cookies != null ) {
             for (int i = 0; i < cookies.length; i++) {
                 cookie = cookies[i];
@@ -52,7 +52,7 @@ public class BillController extends HttpServlet {
         String[] nums = itemsNumbers.split(",");
         for (int i=0;i<nums.length;i++) {
             if (nums[i].length() > 0)
-                items.add(cat.getSingleItem(Integer.parseInt(nums[i])));
+                items.add(cat.getItem(Integer.parseInt(nums[i])));
         }
         return items;
     }

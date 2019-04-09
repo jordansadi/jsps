@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.ResultSet;
+import java.util.LinkedList;
 import java.util.List;
 
 
@@ -32,23 +34,12 @@ public class CatalogController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         response.setContentType("text/html");
-
-        // Create a new instance of a model object
-        // For some applications, we would not want to create a new one each time.
         ItemCatalog shop = new ItemCatalog();
+        List<Item> result = shop.getAllItems();
 
-        // Always a good idea to trim and/or validate input data
-        List<Item> result = shop.getItemCatalog();
-
-        // Parameters are read only Request object properties, but attributes
-        // are read/write. We can use attributes to store data for use on
-        // another page.
         request.setAttribute("catalog", result);
-        
-        // This object lets you forward both the request and response
-        // objects to a destination page
-        RequestDispatcher view =
-                request.getRequestDispatcher(RESULT_PAGE);
+
+        RequestDispatcher view = request.getRequestDispatcher(RESULT_PAGE);
         view.forward(request, response);
     }
 
@@ -57,5 +48,4 @@ public class CatalogController extends HttpServlet {
     public String getServletInfo() {
         return "Main Controller";
     }// </editor-fold>
-
 }

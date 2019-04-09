@@ -1,5 +1,6 @@
 package us.jordan.controller;
 
+import us.jordan.model.CreateDB;
 import us.jordan.model.Item;
 import us.jordan.model.ItemCatalog;
 
@@ -17,45 +18,25 @@ public class HomeController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
-        
-    } // </editor-fold>
+    throws ServletException, IOException {}
 
-    /** 
-     * Handles the HTTP <code>POST</code> method.
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         response.setContentType("text/html");
-        
-        // Create a new instance of a model object
-        // For some applications, we would not want to create a new one each time.
-        ItemCatalog shop = new ItemCatalog();
 
-        // Always a good idea to trim and/or validate input data
-        List<Item> result = shop.getItemCatalog();
+        CreateDB db = new CreateDB();
+        ItemCatalog cat = new ItemCatalog();
+        List<Item> result = cat.getAllItems();
 
-        // Parameters are read only Request object properties, but attributes
-        // are read/write. We can use attributes to store data for use on
-        // another page.
         request.setAttribute("catalog", result);
         
-        // This object lets you forward both the request and response
-        // objects to a destination page
-        RequestDispatcher view =
-                request.getRequestDispatcher(RESULT_PAGE);
+        RequestDispatcher view = request.getRequestDispatcher(RESULT_PAGE);
         view.forward(request, response);
     }
-
 
     @Override
     public String getServletInfo() {
         return "Main Controller";
-    }// </editor-fold>
-
+    }
 }

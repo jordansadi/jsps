@@ -76,14 +76,20 @@
 
         <form action="cartplace.go">
             <table id="products">
+                <tr>
+                    <th>Name</th>
+                    <th>Item #</th>
+                    <th>Price</th>
+                    <th>Add</th>
+                </tr>
                 <tbody>
                     <%
                         List recs = (List) request.getAttribute("catalog");
                         Iterator it = recs.iterator();
                         while (it.hasNext()) {
                             Item item = (Item) it.next();
-                            out.print("<tr><td>" + item.getProductNumber() + "</td><td>" + item.getName() +"</td><td>$" + item.getPrice() +
-                                    "</td><td>" + item.getDescription() + "</td><td>Add to Cart<input type='checkbox' name='cartItem' value=" +
+                            out.print("<tr><td>" + item.getName() + "</td><td>" + item.getProductNumber() +"</td><td>$" + item.getPrice() +
+                                    "</td><td>Add to Cart<input type='checkbox' name='cartItem' value=" +
                                     item.getProductNumber()+ "></td></tr>");
                         }
                     %>
